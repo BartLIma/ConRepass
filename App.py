@@ -2,7 +2,13 @@ import pandas as pd
 import streamlit as st
 
 # Carregar CSV atualizado
-df = pd.read_csv("convenios.csv", sep=";", encoding="latin1")
+
+
+# Teste de leitura
+df = pd.read_csv("convenios.csv", sep=";", encoding="utf-8")
+
+print(df.head())
+
 
 st.title("Consulta de Convênios")
 
