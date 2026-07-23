@@ -18,7 +18,13 @@ if instrumento:
         # 🔑 Bloco 1 — Identificação
         with st.expander("Identificação"):
             st.write(f"**Instrumento:** {resultado.iloc[0].get('Instrumento', '')}")
-            st.write(f"**Ano:** {resultado.iloc[0].get('Ano', '')}")
+            ano = resultado.iloc[0].get('Ano', '')
+# Se for float, converte para inteiro
+if isinstance(ano, float):
+    ano = int(ano)
+# Se ainda assim não for número, garante como string
+ano = str(ano)
+st.write(f"**Ano:** {ano}")
             st.write(f"**Modalidade:** {resultado.iloc[0].get('Modalidade', '')}")
             st.write(f"**Objeto:** {resultado.iloc[0].get('Objeto', '')}")
             st.write(f"**Nome Proponente:** {resultado.iloc[0].get('Nome Proponente', '')}")
