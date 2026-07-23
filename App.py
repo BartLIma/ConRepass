@@ -1,12 +1,13 @@
-   import pandas as pd
+ import pandas as pd
 import streamlit as st
 
-# Forçar CNPJ como texto e Ano como string
+# Leitura do CSV com tratamento especial para o campo Ano
 df = pd.read_csv(
     "convenios.csv",
     sep=";",
     encoding="latin1",
-    dtype={"CNPJ": str, "Ano": str}
+    dtype={"CNPJ": str},
+    converters={"Ano": lambda x: str(x).replace(".0", "")}
 )
 
 st.title("Consulta de Convênios")
@@ -26,3 +27,11 @@ if instrumento:
             st.write(f"**Modalidade:** {resultado.iloc[0].get('Modalidade', '')}")
             st.write(f"**Objeto:** {resultado.iloc[0].get('Objeto', '')}")
             st.write(f"**Nome Proponente:** {resultado.iloc[0].get('Nome Proponente', '')}")
+            st.write(f"**CNPJ:** {resultado.iloc[0].get('CNPJ', '')}")
+            st.write(f"**Situação:** {resultado.iloc[0].get('Situação', '')}")
+            st.write(f"**Processo SEI:** {resultado.iloc[0].get('Processo SEI', '')}")
+
+        # 💰 Bloco 2 — Vigência
+        with st.expander("Vigência"):
+            st.write(f"**Início Vigência:** {resultado.iloc[0].get('Inicio Vigencia', '')}")
+            st.write(f"**Fim Vigência:** {resultado.iloc[0].get('Fim Vigencia', '')}")
