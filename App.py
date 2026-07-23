@@ -1,11 +1,18 @@
 import pandas as pd
+
 import streamlit as st
 
 # Carregar CSV atualizado
 
 
 # Teste de leitura
-df = pd.read_csv("convenios.csv", sep=";", encoding="utf-8")
+df = pd.read_csv(
+    "convenios.csv",
+    sep=";", 
+    encoding="latin1",   # corrige os caracteres estranhos
+    quotechar='"',       # entende campos entre aspas
+    on_bad_lines="warn"  # avisa se houver linhas problemáticas
+)
 
 print(df.head())
 
