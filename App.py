@@ -117,11 +117,4 @@ if instrumento:
             label="📥 Baixar planilha em CSV",
             data=csv_data,
             file_name="convenios_atualizado.csv",
-            mime="text/csv"
-        )
-
-        # Botão para baixar toda a planilha em Excel
-        excel_buffer = BytesIO()
-        df.to_excel(excel_buffer, index=False)
-        st.download_button(
-            label="📥 Baixar planilha em Excel",
+            mime="text/csv
