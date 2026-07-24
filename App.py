@@ -49,17 +49,17 @@ if instrumento:
 
         # 📊 Bloco 3 — Execução Financeira
         with st.expander("Execução Financeira"):
-            st.write(f"**Valor Global:** {resultado.iloc[0].get('Valor Global', '')}")
-            st.write(f"**Valor Empenhado:** {resultado.iloc[0].get('Valor Empenhado', '')}")
-            st.write(f"**Valor Liberado:** {resultado.iloc[0].get('Valor Liberado', '')}")
-            st.write(f"**Valor de Contrapartida:** {resultado.iloc[0].get('Valor de Contrapartida', '')}")
+            st.write(f"**Valor Global: R$** {resultado.iloc[0].get('Valor Global', '')}")
+            st.write(f"**Valor Empenhado: R$** {resultado.iloc[0].get('Valor Empenhado', '')}")
+            st.write(f"**Valor Liberado: R$** {resultado.iloc[0].get('Valor Liberado', '')}")
+            st.write(f"**Valor de Contrapartida: R$** {resultado.iloc[0].get('Valor de Contrapartida', '')}")
             st.write(f"**Ingresso de $ (Rendimentos e Contrapartida):** {resultado.iloc[0].get('Ingresso de $', '')}")
-            st.write(f"**Total em Movimentações Financeiras:** {resultado.iloc[0].get('Total em Movimentacoes Financeiras', '')}")
-            st.write(f"**Saldo em Conta:** {resultado.iloc[0].get('Saldo em conta', '')}")
-            st.write(f"**Vl Devolvido:** {resultado.iloc[0].get('Vl Devolvido', '')}")
-            st.write(f"**Execução Financeira Concedente e Convenente:** {resultado.iloc[0].get('Execucao  Financeira Concedente  e Convenente', '')}")
-            st.write(f"**Devolução de Saldo p/ União:** {resultado.iloc[0].get('Devolucao de Saldo p Uniao', '')}")
-            st.write(f"**Resto a Pagar:** {resultado.iloc[0].get('Resto a Pagar', '')}")
+            st.write(f"**Total em Movimentações Financeiras: R$** {resultado.iloc[0].get('Total em Movimentacoes Financeiras', '')}")
+            st.write(f"**Saldo em Conta: R$** {resultado.iloc[0].get('Saldo em conta', '')}")
+            st.write(f"**Vl Devolvido: R$** {resultado.iloc[0].get('Vl Devolvido', '')}")
+            st.write(f"**Execução Financeira Concedente e Convenente: R$** {resultado.iloc[0].get('Execucao  Financeira Concedente  e Convenente', '')}")
+            st.write(f"**Devolução de Saldo p/ União: R$** {resultado.iloc[0].get('Devolucao de Saldo p Uniao', '')}")
+            st.write(f"**Resto a Pagar: R$** {resultado.iloc[0].get('Resto a Pagar', '')}")
 
         # 📑 Bloco 4 — Prestação de Contas / Execução
         with st.expander("Prestação de Contas / Execução"):
