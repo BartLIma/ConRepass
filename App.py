@@ -4,7 +4,7 @@ import streamlit as st
 # Leitura do CSV com tratamento especial para o campo Ano
 df = pd.read_csv(
     "convenios.csv",
-    sep=";",
+    sep="\t",  # separador tab, pois sua lista de campos veio com tabulação
     encoding="latin1",
     dtype={"CNPJ": str},
     converters={"Ano": lambda x: str(x).replace(".0", "").strip()}
@@ -46,7 +46,8 @@ if instrumento:
             st.write(f"**Valor Global:** {resultado.iloc[0].get('Valor Global', '')}")
             st.write(f"**Valor Empenhado:** {resultado.iloc[0].get('Valor Empenhado', '')}")
             st.write(f"**Valor Liberado:** {resultado.iloc[0].get('Valor Liberado', '')}")
-            st.write(f"**Contrapartida:** {resultado.iloc[0].get('Contrapartida', '')}")
+            st.write(f"**Valor de Contrapartida:** {resultado.iloc[0].get('Valor de Contrapartida', '')}")
+            st.write(f"**Ingresso de $ (Rendimentos e Contrapartida):** {resultado.iloc[0].get('Contrapartida', '')}")
             st.write(f"**Total em Movimentações Financeiras:** {resultado.iloc[0].get('Total em Movimentacoes Financeiras', '')}")
             st.write(f"**Saldo em Conta:** {resultado.iloc[0].get('Saldo em conta', '')}")
             st.write(f"**Vl Devolvido:** {resultado.iloc[0].get('Vl Devolvido', '')}")
@@ -66,7 +67,7 @@ if instrumento:
             st.write(f"**Faixa de Risco:** {faixa_risco}")
             st.write(f"**Grau de Prioridade:** {resultado.iloc[0].get('Grau de Prioridade', '')}")
             st.write(f"**Relatórios de Execução:** {resultado.iloc[0].get('Relatorios de Execucao', '')}")
-            st.write(f"**Ação de Monitoramento:** {resultado.iloc[0].get('Ação de Monitoramento', '')}")
+            st.write(f"**Ação de Monitoramento:** {resultado.iloc[0].get('Acao de Monitoramnto', '')}")
             st.write(f"**Parecer Financeiro:** {resultado.iloc[0].get('Parecer Financeiro', '')}")
             st.write(f"**Parecer Tec-Mérito:** {resultado.iloc[0].get('Parecer Tec -Merito', '')}")
             st.write(f"**Análise de Equipamentos:** {resultado.iloc[0].get('Analise de Equipamentos', '')}")
@@ -77,7 +78,7 @@ if instrumento:
         # 📝 Bloco 5 — Monitoramento
         with st.expander("Monitoramento"):
             st.write(f"**Situação do Convênio:** {resultado.iloc[0].get('Status de Execucao', '')}")
-            st.write(f"**Percentual de Execução:** {resultado.iloc[0].get('Percentual  Exec', '')}")
+            st.write(f"**Percentual de Execução:** {resultado.iloc[0].get('Percental  Exec', '')}")
             st.write(f"**Técnico / Analista:** {resultado.iloc[0].get('Tecnico / Analista', '')}")
             st.write(f"**Data de Vínculo Fiscal:** {resultado.iloc[0].get('Data de Vinculo Fiscal', '')}")
 
@@ -86,7 +87,7 @@ if instrumento:
             st.write(f"**ALERTA de Execução Financeira:** {resultado.iloc[0].get('ALERTA de Execucao Financeira', '')}")
             st.write(f"**ALERTA Sem Desembolso:** {resultado.iloc[0].get('ALERTA Sem Desembolso', '')}")
             st.write(f"**ALERTA Sem Pgt + 150 Dias:** {resultado.iloc[0].get('ALERTA Sem Pgt + 150 Dias', '')}")
-            st.write(f"**Acórdão TCU1203:** {resultado.iloc[0].get('Acordão  TCU1203', '')}")
+            st.write(f"**Acórdão TCU1203:** {resultado.iloc[0].get('Acordao  TCU1203', '')}")
             st.write(f"**Grau de Prioridade:** {resultado.iloc[0].get('GRAU DE PRIORIDADE', '')}")
 
     else:
@@ -97,4 +98,3 @@ st.markdown(
     "<p style='text-align:right; font-size:12px; color:gray;'>Bartolomeu Lima</p>",
     unsafe_allow_html=True
 )
-
