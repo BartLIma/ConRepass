@@ -79,4 +79,44 @@ if instrumento:
             st.write(f"**Parecer Tec-Mérito:** {resultado.iloc[0].get('Parecer Tec -Merito', '')}")
             st.write(f"**Análise de Equipamentos:** {resultado.iloc[0].get('Analise de Equipamentos', '')}")
             st.write(f"**Ação de Análise de PC:** {resultado.iloc[0].get('Acao de Analise de PC', '')}")
-            st.write(f"**Percentual de Evolução da Análise:** {resultado
+            st.write(f"**Percentual de Evolução da Análise:** {resultado.iloc[0].get('Percentual de Evolucao da Analise', '')}")
+            st.write(f"**Pareceres Incluídos na Plataforma:** {resultado.iloc[0].get('Pareceres Incluidos na Plataforma', '')}")
+
+        # 📝 Bloco 5 — Monitoramento
+        with st.expander("Monitoramento"):
+            st.write(f"**Situação do Convênio:** {resultado.iloc[0].get('Status de Execucao', '')}")
+            st.write(f"**Percentual de Execução:** {resultado.iloc[0].get('Percental  Exec', '')}")
+            st.write(f"**Técnico / Analista:** {resultado.iloc[0].get('Tecnico / Analista', '')}")
+            st.write(f"**Data de Vínculo Fiscal:** {resultado.iloc[0].get('Data de Vinculo Fiscal', '')}")
+
+        # ⚠️ Bloco 6 — Alertas
+        with st.expander("Alertas"):
+            st.write(f"**ALERTA de Execução Financeira:** {resultado.iloc[0].get('ALERTA de Execucao Financeira', '')}")
+            st.write(f"**ALERTA Sem Desembolso:** {resultado.iloc[0].get('ALERTA Sem Desembolso', '')}")
+            st.write(f"**ALERTA Sem Pgt + 150 Dias:** {resultado.iloc[0].get('ALERTA Sem Pgt + 150 Dias', '')}")
+            st.write(f"**Acórdão TCU1203:** {resultado.iloc[0].get('Acordao  TCU1203', '')}")
+            st.write(f"**Grau de Prioridade:** {resultado.iloc[0].get('GRAU DE PRIORIDADE', '')}")
+
+        # 🗒️ Bloco 7 — Anotações e Observações
+        with st.expander("Anotações e Observações"):
+            anotacoes_obs = st.text_area(
+                "ANOTAÇÕES OBS:",
+                value=resultado.iloc[0].get('ANOTACOES OBS', '')
+            )
+
+        # --- Botões de ação ---
+        if st.button("Salvar alterações"):
+            # Atualiza os valores editados no DataFrame
+            df.loc[resultado.index[0], 'Data de Envio da  PC'] = data_envio_pc
+            df.loc[resultado.index[0], 'ANOTACOES OBS'] = anotacoes_obs
+            # Salva de volta no CSV
+            df.to_csv("convenios.csv", sep=";", encoding="latin1", index=False)
+            st.success("Alterações salvas com sucesso!")
+
+        # Botão para baixar toda a planilha em CSV
+        csv_data = df.to_csv(sep=";", index=False).encode("latin1")
+        st.download_button(
+            label="📥 Baixar planilha em CSV",
+            data=csv_data,
+            file_name="convenios_atualizado.csv",
+            mime="text/c
