@@ -125,4 +125,10 @@ if senha == senha_correta:
             )
 
 else:
-    st.warning("Digite a senha correta para acessar o
+    st.warning("Digite a senha correta para acessar o sistema.")
+
+# Rodapé discreto
+st.markdown(
+    "<p style='text-align:right; font-size:12px; color:green;'>Bartolomeu Lima</p>",
+    unsafe_allow_html=True
+)
