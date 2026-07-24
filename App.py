@@ -22,7 +22,7 @@ instrumento = st.selectbox("Selecione o número do Instrumento (Convênio/Contra
 if instrumento:
     resultado = df[df["Instrumento"].astype(str).str.strip() == str(instrumento).strip()]
     if not resultado.empty:
-        st.subheader(f"Convênio nº {instrumento}")
+        st.subheader(f"Instrumento nº {instrumento}")
 
         # 🔑 Bloco 1 — Identificação
         with st.expander("Identificação"):
