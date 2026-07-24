@@ -39,7 +39,12 @@ if instrumento:
             st.write(f"**Início Vigência:** {resultado.iloc[0].get('Inicio Vigencia', '')}")
             st.write(f"**Fim Vigência:** {resultado.iloc[0].get('Fim Vigencia', '')}")
             st.write(f"**Data Limite para Apresentar PC:** {resultado.iloc[0].get('Data Limite para Apresentar PC', '')}")
-            st.write(f"**Prestação de Contas Apresentada em:** {resultado.iloc[0].get('Data de Envio da  PC', '')}")
+            
+            # Campo editável
+            data_envio_pc = st.text_input(
+                "Prestação de Contas Apresentada em:",
+                value=resultado.iloc[0].get('Data de Envio da  PC', '')
+            )
 
         # 📊 Bloco 3 — Execução Financeira
         with st.expander("Execução Financeira"):
@@ -89,6 +94,13 @@ if instrumento:
             st.write(f"**ALERTA Sem Pgt + 150 Dias:** {resultado.iloc[0].get('ALERTA Sem Pgt + 150 Dias', '')}")
             st.write(f"**Acórdão TCU1203:** {resultado.iloc[0].get('Acordao  TCU1203', '')}")
             st.write(f"**Grau de Prioridade:** {resultado.iloc[0].get('GRAU DE PRIORIDADE', '')}")
+
+        # 🗒️ Bloco 7 — Anotações e Observações
+        with st.expander("Anotações e Observações"):
+            anotacoes_obs = st.text_area(
+                "ANOTAÇÕES OBS:",
+                value=resultado.iloc[0].get('ANOTACOES OBS', '')
+            )
 
     else:
         st.warning("Convênio não encontrado na base de dados.")
