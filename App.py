@@ -117,4 +117,4 @@ if instrumento:
             label="📥 Baixar planilha em CSV",
             data=csv_data,
             file_name="convenios_atualizado.csv",
-            mime="text/csv
+            mime="text/csv"
