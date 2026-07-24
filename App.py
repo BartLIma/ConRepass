@@ -123,6 +123,6 @@ if instrumento:
         excel_buffer = BytesIO()
 # Rodapé discreto com seu nome
 st.markdown(
-    "<p style='text-align:right; font-size:12px; color:gray;'>Bartolomeu Lima</p>",
+    "<p style='text-align:right; font-size:12px; color:greem;'>Bartolomeu Lima</p>",
     unsafe_allow_html=True
 )
