@@ -14,6 +14,9 @@ df = pd.read_csv(
 # Remove espaços extras dos nomes das colunas
 df.columns = df.columns.str.strip()
 
+# Âncora para voltar ao topo
+st.markdown("<a id='top'></a>", unsafe_allow_html=True)
+
 st.title("Consulta de Convênios")
 
 instrumentos = sorted(df["Instrumento"].dropna().unique())
@@ -103,21 +106,21 @@ if instrumento:
                 value=resultado.iloc[0].get('ANOTACOES OBS', '')
             )
 
-        # --- Botões de ação ---
-        if st.button("Salvar alterações"):
-            df.loc[resultado.index[0], 'Data de Envio da  PC'] = data_envio_pc
-            df.loc[resultado.index[0], 'ANOTACOES OBS'] = anotacoes_obs
-            df.to_csv("convenios.csv", sep=";", encoding="latin1", index=False)
-            st.success("Alterações salvas com sucesso!")
+        # --- Botões de ação lado a lado ---
+        col1, col2, col3 = st.columns([1,1,1])
 
-        # Botão para baixar toda a planilha em CSV
-        csv_data = df.to_csv(sep=";", index=False).encode("latin1")
-        st.download_button(
-            label="📥 Baixar planilha em CSV",
-            data=csv_data,
-            file_name="convenios_atualizado.csv",
-            mime="text/csv"
-        )
+        with col1:
+            if st.button("💾 Salvar alterações"):
+                df.loc[resultado.index[0], 'Data de Envio da  PC'] = data_envio_pc
+                df.loc[resultado.index[0], 'ANOTACOES OBS'] = anotacoes_obs
+                df.to_csv("convenios.csv", sep=";", encoding="latin1", index=False)
+                st.success("Alterações salvas com sucesso!")
 
-        # Botão para baixar toda a planilha em Excel
-        excel_buffer = BytesIO()
+        with col2:
+            if st.button("⬆️ Voltar ao topo"):
+                st.markdown("<a href='#top'></a>", unsafe_allow_html=True)
+
+        with col3:
+            if st.button("🧹 Limpar pesquisa e voltar ao topo"):
+                st.experimental_set_query_params()  # limpa parâmetros da URL
+                st.mark
