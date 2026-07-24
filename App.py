@@ -1,5 +1,7 @@
 import pandas as pd
 import streamlit as st
+from io import BytesIO
+from fpdf import FPDF
 
 # Leitura do CSV com tratamento especial para o campo Ano
 df = pd.read_csv(
@@ -102,12 +104,24 @@ if instrumento:
                 value=resultado.iloc[0].get('ANOTACOES OBS', '')
             )
 
-    else:
-        st.warning("Convênio não encontrado na base de dados.")
+        # --- Botões de ação ---
+        if st.button("Salvar alterações"):
+            df.loc[resultado.index[0], 'Data de Envio da  PC'] = data_envio_pc
+            df.loc[resultado.index[0], 'ANOTACOES OBS'] = anotacoes_obs
+            df.to_csv("convenios.csv", sep=";", encoding="latin1", index=False)
+            st.success("Alterações salvas com sucesso!")
 
-# Rodapé discreto
-st.markdown(
-    "<p style='text-align:right; font-size:12px; color:gray;'>Bartolomeu Lima</p>",
-    unsafe_allow_html=True
-)
+        # Botão para baixar toda a planilha em CSV
+        csv_data = df.to_csv(sep=";", index=False).encode("latin1")
+        st.download_button(
+            label="📥 Baixar planilha em CSV",
+            data=csv_data,
+            file_name="convenios_atualizado.csv",
+            mime="text/csv"
+        )
 
+        # Botão para baixar toda a planilha em Excel
+        excel_buffer = BytesIO()
+        df.to_excel(excel_buffer, index=False)
+        st.download_button(
+            label="📥 Baixar planilha em Excel",
