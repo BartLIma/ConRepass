@@ -103,8 +103,8 @@ if instrumento:
                 value=resultado.iloc[0].get('ANOTACOES OBS', '')
             )
 
-        # --- Botão de salvar alterações ---
-        if st.button("💾 Salvar alterações"):
+        # --- Botões de ação ---
+        if st.button("Salvar alterações"):
             df.loc[resultado.index[0], 'Data de Envio da  PC'] = data_envio_pc
             df.loc[resultado.index[0], 'ANOTACOES OBS'] = anotacoes_obs
             df.to_csv("convenios.csv", sep=";", encoding="latin1", index=False)
@@ -121,4 +121,3 @@ if instrumento:
 
         # Botão para baixar toda a planilha em Excel
         excel_buffer = BytesIO()
-        df.to_excel(excel_buffer, index=False)
