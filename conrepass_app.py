@@ -1,12 +1,9 @@
 import pandas as pd
 import streamlit as st
-from dotenv import load_dotenv
-import os
 from io import BytesIO
 
-# Carregar variáveis do .env
-load_dotenv()
-senha_correta = os.getenv("APP_PASSWORD")  # valor definido no .env
+# Senha fixa
+senha_correta = "ditre123"
 
 # Campo de senha
 senha = st.text_input("Digite a senha para acessar:", type="password")
@@ -69,15 +66,56 @@ if senha == senha_correta:
                 st.write(f"**Devolução de Saldo p/ União: R$** {resultado.iloc[0].get('Devolucao de Saldo p Uniao', '')}")
                 st.write(f"**Resto a Pagar: R$** {resultado.iloc[0].get('Resto a Pagar', '')}")
 
-            # ... demais blocos (Prestação de Contas, Monitoramento, Alertas, Observações) iguais ao seu código ...
+            # 📑 Bloco 4 — Prestação de Contas / Execução
+            with st.expander("Prestação de Contas / Execução"):
+                st.write(f"**Dias de Atraso Envio da PC:** {resultado.iloc[0].get('Dias de Atraso Envio da PC', '')}")
+                st.write(f"**PC Informatizada:** {resultado.iloc[0].get('PC Informatizada', '')}")
+                st.write(f"**Nota de Risco:** {resultado.iloc[0].get('Nota de Risco', '')}")
+                st.write(f"**Limite Toler Risco:** {resultado.iloc[0].get('Limite Toler  Risco', '')}")
+                faixa_risco = resultado.iloc[0].get('Faixa de Risco', '')
+                if pd.isna(faixa_risco):
+                    faixa_risco = "Não informado"
+                st.write(f"**Faixa de Risco:** {faixa_risco}")
+                st.write(f"**Grau de Prioridade:** {resultado.iloc[0].get('Grau de Prioridade', '')}")
+                st.write(f"**Relatórios de Execução:** {resultado.iloc[0].get('Relatorios de Execucao', '')}")
+                st.write(f"**Ação de Monitoramento:** {resultado.iloc[0].get('Acao de Monitoramnto', '')}")
+                st.write(f"**Parecer Financeiro:** {resultado.iloc[0].get('Parecer Financeiro', '')}")
+                st.write(f"**Parecer Tec-Mérito:** {resultado.iloc[0].get('Parecer Tec -Merito', '')}")
+                st.write(f"**Análise de Equipamentos:** {resultado.iloc[0].get('Analise de Equipamentos', '')}")
+                st.write(f"**Ação de Análise de PC:** {resultado.iloc[0].get('Acao de Analise de PC', '')}")
+                st.write(f"**Percentual de Evolução da Análise:** {resultado.iloc[0].get('Percentual de Evolucao da Analise', '')}")
+                st.write(f"**Pareceres Incluídos na Plataforma:** {resultado.iloc[0].get('Pareceres Incluidos na Plataforma', '')}")
 
-            # Botão para salvar alterações
+            # 📝 Bloco 5 — Monitoramento
+            with st.expander("Monitoramento"):
+                st.write(f"**Situação do Convênio:** {resultado.iloc[0].get('Status de Execucao', '')}")
+                st.write(f"**Percentual de Execução:** {resultado.iloc[0].get('Percental  Exec', '')}")
+                st.write(f"**Técnico / Analista:** {resultado.iloc[0].get('Tecnico / Analista', '')}")
+                st.write(f"**Data de Vínculo Fiscal:** {resultado.iloc[0].get('Data de Vinculo Fiscal', '')}")
+
+            # ⚠️ Bloco 6 — Alertas
+            with st.expander("Alertas"):
+                st.write(f"**ALERTA de Execução Financeira:** {resultado.iloc[0].get('ALERTA de Execucao Financeira', '')}")
+                st.write(f"**ALERTA Sem Desembolso:** {resultado.iloc[0].get('ALERTA Sem Desembolso', '')}")
+                st.write(f"**ALERTA Sem Pgt + 150 Dias:** {resultado.iloc[0].get('ALERTA Sem Pgt + 150 Dias', '')}")
+                st.write(f"**Acórdão TCU1203:** {resultado.iloc[0].get('Acordao  TCU1203', '')}")
+                st.write(f"**Grau de Prioridade:** {resultado.iloc[0].get('GRAU DE PRIORIDADE', '')}")
+
+            # 🗒️ Bloco 7 — Anotações e Observações
+            with st.expander("Anotações e Observações"):
+                anotacoes_obs = st.text_area(
+                    "ANOTAÇÕES OBS:",
+                    value=resultado.iloc[0].get('ANOTACOES OBS', '')
+                )
+
+            # --- Botões de ação ---
             if st.button("Salvar alterações"):
                 df.loc[resultado.index[0], 'Data de Envio da  PC'] = data_envio_pc
+                df.loc[resultado.index[0], 'ANOTACOES OBS'] = anotacoes_obs
                 df.to_csv("convenios.csv", sep=";", encoding="latin1", index=False)
                 st.success("Alterações salvas com sucesso!")
 
-            # Botão para baixar CSV
+            # Botão para baixar toda a planilha em CSV
             csv_data = df.to_csv(sep=";", index=False).encode("latin1")
             st.download_button(
                 label="📥 Baixar planilha em CSV",
@@ -86,8 +124,5 @@ if senha == senha_correta:
                 mime="text/csv"
             )
 
-# Rodapé discreto
-st.markdown(
-    "<p style='text-align:right; font-size:12px; color:green;'>Bartolomeu Lima</p>",
-    unsafe_allow_html=True
-)
+else:
+    st
