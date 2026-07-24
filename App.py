@@ -4,7 +4,7 @@ import streamlit as st
 # Leitura do CSV com tratamento especial para o campo Ano
 df = pd.read_csv(
     "convenios.csv",
-    sep="\t",  # separador tab, pois sua lista de campos veio com tabulação
+    sep=";",   # separador correto
     encoding="latin1",
     dtype={"CNPJ": str},
     converters={"Ano": lambda x: str(x).replace(".0", "").strip()}
