@@ -14,10 +14,10 @@ df = pd.read_csv(
 # Remove espaços extras dos nomes das colunas
 df.columns = df.columns.str.strip()
 
-st.title("Consulta de Transferências Discricionárias (Convênios/Contrato de Repasse")
+st.title("Consulta de Transferências Discricionárias")
 
 instrumentos = sorted(df["Instrumento"].dropna().unique())
-instrumento = st.selectbox("Selecione o número do convênio (Instrumento):", instrumentos)
+instrumento = st.selectbox("Selecione o número do Instrumento (Convênio/Contrato de Repasse):", instrumentos)
 
 if instrumento:
     resultado = df[df["Instrumento"].astype(str).str.strip() == str(instrumento).strip()]
