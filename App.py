@@ -14,9 +14,6 @@ df = pd.read_csv(
 # Remove espaços extras dos nomes das colunas
 df.columns = df.columns.str.strip()
 
-# Âncora para voltar ao topo
-st.markdown("<a id='top'></a>", unsafe_allow_html=True)
-
 st.title("Consulta de Convênios")
 
 instrumentos = sorted(df["Instrumento"].dropna().unique())
@@ -118,9 +115,11 @@ if instrumento:
 
         with col2:
             if st.button("⬆️ Voltar ao topo"):
-                st.markdown("<a href='#top'></a>", unsafe_allow_html=True)
+                st.rerun()
 
         with col3:
             if st.button("🧹 Limpar pesquisa e voltar ao topo"):
-                st.experimental_set_query_params()  # limpa parâmetros da URL
-                st.mark
+                st.session_state.clear()
+                st.rerun()
+
+        # Botão para baixar
