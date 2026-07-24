@@ -1,5 +1,45 @@
 import pandas as pd
 import streamlit as st
+from dotenv import load_dotenv
+import os
+
+# Carregar variáveis do .env
+load_dotenv()
+senha_correta = os.getenv("APP_PASSWORD")  # valor definido no .env
+
+# Campo de senha
+senha = st.text_input("Digite a senha para acessar:", type="password")
+
+if senha == senha_correta:
+    st.success("Acesso liberado ✅")
+
+    # --- aqui você cola o código do Conrepass ---
+    df = pd.read_csv(
+        "convenios.csv",
+        sep=";",   
+        encoding="latin1",
+        dtype={"CNPJ": str},
+        converters={"Ano": lambda x: str(x).replace(".0", "").strip()}
+    )
+    # Remove espaços extras dos nomes das colunas
+    df.columns = df.columns.str.strip()
+
+    st.title("Consulta de Convênios")
+
+    instrumentos = sorted(df["Instrumento"].dropna().unique())
+    instrumento = st.selectbox("Selecione o número do convênio (Instrumento):", instrumentos)
+
+    if instrumento:
+        resultado = df[df["Instrumento"].astype(str).str.strip() == str(instrumento).strip()]
+        if not resultado.empty:
+            st.subheader(f"Convênio nº {instrumento}")
+            # ... demais blocos de exibição ...
+else:
+    st.warning("Digite a senha correta para acessar o sistema.")
+
+------------------
+import pandas as pd
+import streamlit as st
 from io import BytesIO
 
 # Leitura do CSV com tratamento especial para o campo Ano
@@ -10,19 +50,6 @@ df = pd.read_csv(
     dtype={"CNPJ": str},
     converters={"Ano": lambda x: str(x).replace(".0", "").strip()}
 )
-
-# Remove espaços extras dos nomes das colunas
-df.columns = df.columns.str.strip()
-
-st.title("Consulta de Transferências Discricionárias")
-
-instrumentos = sorted(df["Instrumento"].dropna().unique())
-instrumento = st.selectbox("Selecione o número do Instrumento (Convênio/Contrato de Repasse):", instrumentos)
-
-if instrumento:
-    resultado = df[df["Instrumento"].astype(str).str.strip() == str(instrumento).strip()]
-    if not resultado.empty:
-        st.subheader(f"Instrumento nº {instrumento}")
 
         # 🔑 Bloco 1 — Identificação
         with st.expander("Identificação"):
