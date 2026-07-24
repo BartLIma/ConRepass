@@ -53,7 +53,7 @@ if instrumento:
             st.write(f"**Valor Empenhado: R$** {resultado.iloc[0].get('Valor Empenhado', '')}")
             st.write(f"**Valor Liberado: R$** {resultado.iloc[0].get('Valor Liberado', '')}")
             st.write(f"**Valor de Contrapartida: R$** {resultado.iloc[0].get('Valor de Contrapartida', '')}")
-            st.write(f"**Ingresso de R$ (Rendimentos e Contrapartida): R$** {resultado.iloc[0].get('Ingresso de $', '')}")
+            st.write(f"**Ingresso de R$ (Rendimentos e Contrapartida):** {resultado.iloc[0].get('Ingresso de $', '')}")
             st.write(f"**Total em Movimentações Financeiras: R$** {resultado.iloc[0].get('Total em Movimentacoes Financeiras', '')}")
             st.write(f"**Saldo em Conta: R$** {resultado.iloc[0].get('Saldo em conta', '')}")
             st.write(f"**Vl Devolvido: R$** {resultado.iloc[0].get('Vl Devolvido', '')}")
@@ -121,3 +121,8 @@ if instrumento:
 
         # Botão para baixar toda a planilha em Excel
         excel_buffer = BytesIO()
+# Rodapé discreto com seu nome
+st.markdown(
+    "<p style='text-align:right; font-size:12px; color:gray;'>Bartolomeu Lima</p>",
+    unsafe_allow_html=True
+)
