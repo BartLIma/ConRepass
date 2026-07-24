@@ -106,10 +106,8 @@ if instrumento:
 
         # --- Botões de ação ---
         if st.button("Salvar alterações"):
-            # Atualiza os valores editados no DataFrame
             df.loc[resultado.index[0], 'Data de Envio da  PC'] = data_envio_pc
             df.loc[resultado.index[0], 'ANOTACOES OBS'] = anotacoes_obs
-            # Salva de volta no CSV
             df.to_csv("convenios.csv", sep=";", encoding="latin1", index=False)
             st.success("Alterações salvas com sucesso!")
 
@@ -119,4 +117,9 @@ if instrumento:
             label="📥 Baixar planilha em CSV",
             data=csv_data,
             file_name="convenios_atualizado.csv",
-            mime="text/c
+            mime="text/csv"
+        )
+
+        # Botão para baixar toda a planilha em Excel
+        excel_buffer = BytesIO()
+        df.to
