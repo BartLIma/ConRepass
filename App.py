@@ -10,6 +10,9 @@ df = pd.read_csv(
     converters={"Ano": lambda x: str(x).replace(".0", "").strip()}
 )
 
+# Remove espaços extras dos nomes das colunas
+df.columns = df.columns.str.strip()
+
 st.title("Consulta de Convênios")
 
 instrumentos = sorted(df["Instrumento"].dropna().unique())
@@ -40,13 +43,13 @@ if instrumento:
 
         # 📊 Bloco 3 — Execução Financeira
         with st.expander("Execução Financeira"):
-            st.write(f"**Valor Global:** {resultado.iloc[0].get(' Valor Global ', '')}")
+            st.write(f"**Valor Global:** {resultado.iloc[0].get('Valor Global', '')}")
             st.write(f"**Valor Empenhado:** {resultado.iloc[0].get('Valor Empenhado', '')}")
-            st.write(f"**Valor Liberado:** {resultado.iloc[0].get(' Valor Liberado', '')}")
-            st.write(f"**Contrapartida:** {resultado.iloc[0].get(' Contrapartida', '')}")
-            st.write(f"**Total em Movimentações Financeiras:** {resultado.iloc[0].get(' Total em Movimentacoes Financeiras', '')}")
-            st.write(f"**Saldo em Conta:** {resultado.iloc[0].get(' Saldo em conta', '')}")
-            st.write(f"**Vl Devolvido:** {resultado.iloc[0].get(' Vl Devolvido', '')}")
+            st.write(f"**Valor Liberado:** {resultado.iloc[0].get('Valor Liberado', '')}")
+            st.write(f"**Contrapartida:** {resultado.iloc[0].get('Contrapartida', '')}")
+            st.write(f"**Total em Movimentações Financeiras:** {resultado.iloc[0].get('Total em Movimentacoes Financeiras', '')}")
+            st.write(f"**Saldo em Conta:** {resultado.iloc[0].get('Saldo em conta', '')}")
+            st.write(f"**Vl Devolvido:** {resultado.iloc[0].get('Vl Devolvido', '')}")
             st.write(f"**Execução Financeira Concedente e Convenente:** {resultado.iloc[0].get('Execucao  Financeira Concedente  e Convenente', '')}")
             st.write(f"**Devolução de Saldo p/ União:** {resultado.iloc[0].get('Devolucao de Saldo p Uniao', '')}")
             st.write(f"**Resto a Pagar:** {resultado.iloc[0].get('Resto a Pagar', '')}")
@@ -80,11 +83,11 @@ if instrumento:
 
         # ⚠️ Bloco 6 — Alertas
         with st.expander("Alertas"):
-            st.write(f"**ALERTA de Execução Financeira:** {resultado.iloc[0].get(' ALERTA de Execucao Financeira', '')}")
-            st.write(f"**ALERTA Sem Desembolso:** {resultado.iloc[0].get(' ALERTA Sem Desembolso', '')}")
-            st.write(f"**ALERTA Sem Pgt + 150 Dias:** {resultado.iloc[0].get(' ALERTA Sem Pgt + 150 Dias', '')}")
-            st.write(f"**Acórdão TCU1203:** {resultado.iloc[0].get(' Acordão  TCU1203', '')}")
-            st.write(f"**Grau de Prioridade:** {resultado.iloc[0].get(' GRAU DE PRIORIDADE', '')}")
+            st.write(f"**ALERTA de Execução Financeira:** {resultado.iloc[0].get('ALERTA de Execucao Financeira', '')}")
+            st.write(f"**ALERTA Sem Desembolso:** {resultado.iloc[0].get('ALERTA Sem Desembolso', '')}")
+            st.write(f"**ALERTA Sem Pgt + 150 Dias:** {resultado.iloc[0].get('ALERTA Sem Pgt + 150 Dias', '')}")
+            st.write(f"**Acórdão TCU1203:** {resultado.iloc[0].get('Acordão  TCU1203', '')}")
+            st.write(f"**Grau de Prioridade:** {resultado.iloc[0].get('GRAU DE PRIORIDADE', '')}")
 
     else:
         st.warning("Convênio não encontrado na base de dados.")
@@ -94,3 +97,4 @@ st.markdown(
     "<p style='text-align:right; font-size:12px; color:gray;'>Bartolomeu Lima</p>",
     unsafe_allow_html=True
 )
+
