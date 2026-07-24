@@ -14,7 +14,7 @@ df = pd.read_csv(
 # Remove espaços extras dos nomes das colunas
 df.columns = df.columns.str.strip()
 
-st.title("Consulta de Convênios")
+st.title("Consulta de Transferências Discricionárias (Convênios/Contrato de Repasse")
 
 instrumentos = sorted(df["Instrumento"].dropna().unique())
 instrumento = st.selectbox("Selecione o número do convênio (Instrumento):", instrumentos)
