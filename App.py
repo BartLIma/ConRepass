@@ -53,7 +53,7 @@ if instrumento:
             st.write(f"**Valor Empenhado: R$** {resultado.iloc[0].get('Valor Empenhado', '')}")
             st.write(f"**Valor Liberado: R$** {resultado.iloc[0].get('Valor Liberado', '')}")
             st.write(f"**Valor de Contrapartida: R$** {resultado.iloc[0].get('Valor de Contrapartida', '')}")
-            st.write(f"**Ingresso de $ (Rendimentos e Contrapartida) R$:** {resultado.iloc[0].get('Ingresso de $', '')}")
+            st.write(f"**Ingresso de $ (Rendimentos e Contrapartida):** {resultado.iloc[0].get('Ingresso de $', '')}")
             st.write(f"**Total em Movimentações Financeiras: R$** {resultado.iloc[0].get('Total em Movimentacoes Financeiras', '')}")
             st.write(f"**Saldo em Conta: R$** {resultado.iloc[0].get('Saldo em conta', '')}")
             st.write(f"**Vl Devolvido: R$** {resultado.iloc[0].get('Vl Devolvido', '')}")
