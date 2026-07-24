@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
 from io import BytesIO
-from fpdf import FPDF
 
 # Leitura do CSV com tratamento especial para o campo Ano
 df = pd.read_csv(
@@ -117,4 +116,8 @@ if instrumento:
             label="📥 Baixar planilha em CSV",
             data=csv_data,
             file_name="convenios_atualizado.csv",
-            mime="text/csv")
+            mime="text/csv"
+        )
+
+        # Botão para baixar toda a planilha em Excel
+        excel_buffer = BytesIO()
