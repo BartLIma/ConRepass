@@ -129,6 +129,9 @@ else:
 
 # Rodapé discreto
 st.markdown(
-    "<p style='text-align:right; font-size:12px; color:green;'>Bartolomeu Lima</p>",
+    "<p style='text-align:right; font-size:12px; color:green;'>Bartolomeu Lima - Corecon-ES 1541</p>",
     unsafe_allow_html=True
 )
+
+# Volta para o Menu
+st.markdown("[⬅️ Voltar ao Menu](https://jcx2q4gypazay4wsx9btow.streamlit.app/)")
