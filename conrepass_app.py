@@ -15,7 +15,8 @@ if "acesso_liberado" not in st.session_state:
 if not st.session_state["acesso_liberado"]:
     st.title("🔐 Guardiã dos Dados - Autenticação")
     
-    col_login, _ = st.columns()
+    # CORREÇÃO DO ERRO: Passando o número 2 para st.columns()
+    col_login, _ = st.columns(2)
     with col_login:
         senha = st.text_input("Digite a senha para acessar:", type="password")
         if st.button("Entrar", use_container_width=True):
@@ -40,8 +41,8 @@ if st.session_state["acesso_liberado"]:
 
     st.title("🔍 Consulta de Convênios (Conrepass)")
 
-    # Seleção de convênio compacta
-    col_sel, _ = st.columns()
+    # Seleção de convênio compacta (Ajustada para 2 colunas para não ficar gigante)
+    col_sel, _ = st.columns(2)
     with col_sel:
         instrumentos = sorted(df["Instrumento"].dropna().unique())
         instrumento = st.selectbox("Selecione o número do convênio:", instrumentos)
@@ -51,9 +52,9 @@ if st.session_state["acesso_liberado"]:
         resultado = df[df["Instrumento"].astype(str).str.strip() == str(instrumento).strip()]
         
         if not resultado.empty:
-            idx_registro = resultado.index[0]
+            idx_registro = resultado.index
             
-            # --- MEMÓRIA ESTÁVEL PARA EDIÇÃO (Garante digitação fluida) ---
+            # --- MEMÓRIA ESTÁVEL PARA EDIÇÃO ---
             key_data = f"data_pc_{instrumento}"
             key_obs = f"obs_{instrumento}"
             
@@ -179,13 +180,9 @@ if st.session_state["acesso_liberado"]:
                 st.write(f"**Grau de Prioridade:** {resultado['GRAU DE PRIORIDADE'].values[0]}")
 
             elif "🗒️ Anotações e OBS" in menu_blocos:
-                # Campo de texto totalmente fluido, reativo e desbloqueado
+                # Campo de texto totalmente fluido e desbloqueado
                 st.text_area("🗒️ Modifique as observações do convênio:", key=key_obs, height=250)
 
 # --- RODAPÉ DISCRETO PADRONIZADO ---
 st.markdown("---")
 st.markdown(
-    "<p style='text-align:right; font-size:12px; color:gray;'>Bartolomeu Lima - Corecon-ES 1541</p>",
-    unsafe_allow_html=True
-)
-
