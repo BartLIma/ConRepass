@@ -184,5 +184,10 @@ if st.session_state["acesso_liberado"]:
                 st.text_area("🗒️ Modifique as observações do convênio:", key=key_obs, height=250)
 
 # --- RODAPÉ DISCRETO PADRONIZADO ---
+# --- RODAPÉ DISCRETO PADRONIZADO ---
 st.markdown("---")
 st.markdown(
+    "<p style='text-align:right; font-size:12px; color:gray;'>Bartolomeu Lima - Corecon-ES 1541</p>",
+    unsafe_allow_html=True
+)
+
