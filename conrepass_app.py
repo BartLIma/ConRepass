@@ -184,4 +184,4 @@ if st.session_state["acesso_liberado"]:
 
 # --- RODAPÉ DISCRETO PADRONIZADO ---
 st.markdown("---")
-st.markdown("Bartolomeu Lima - Corecon-ES 1541",unsafe_allow_html=True)
+st.markdown("
