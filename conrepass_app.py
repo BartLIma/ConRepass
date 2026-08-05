@@ -51,20 +51,22 @@ if st.session_state["acesso_liberado"]:
         resultado = df[df["Instrumento"].astype(str).str.strip() == str(instrumento).strip()]
         
         if not resultado.empty:
-            idx_registro = resultado.index
+            # Captura o índice numérico exato da linha original no CSV
+            idx_registro = resultado.index[0]
             
             # --- CHAVES DE MEMÓRIA ESTÁVEIS ---
             key_data = f"data_pc_{instrumento}"
             key_obs = f"obs_{instrumento}"
             
-            # Puxa o dado do Pandas tratando valores nulos para texto limpo (Evita colchetes)
-            val_data = resultado.loc[idx_registro, 'Data de Envio da  PC'].values[0]
-            val_obs = resultado.loc[idx_registro, 'ANOTACOES OBS'].values[0]
+            # CORREÇÃO CRÍTICA: Puxa como texto puro (.iloc[0]), igual ao seu código original que funcionava
+            val_data_orig = str(resultado.iloc[0].get('Data de Envio da  PC', '')).strip()
+            val_obs_orig = str(resultado.iloc[0].get('ANOTACOES OBS', '')).strip()
             
+            # Injeta na memória apenas se a chave não existir na sessão atual
             if key_data not in st.session_state:
-                st.session_state[key_data] = str(val_data).strip() if pd.notna(val_data) else ""
+                st.session_state[key_data] = val_data_orig if pd.notna(resultado.iloc[0].get('Data de Envio da  PC')) else ""
             if key_obs not in st.session_state:
-                st.session_state[key_obs] = str(val_obs).strip() if pd.notna(val_obs) else ""
+                st.session_state[key_obs] = val_obs_orig if pd.notna(resultado.iloc[0].get('ANOTACOES OBS')) else ""
 
             # --- MENU LATERAL VERTICALIZADO ---
             st.sidebar.header("Menu de Controle")
@@ -87,6 +89,7 @@ if st.session_state["acesso_liberado"]:
 
             # Botão de Salvar Alterações fixo na barra lateral
             if st.sidebar.button("💾 Salvar Alterações", use_container_width=True):
+                # Grava usando o índice exato mapeado da linha do DataFrame original
                 df.loc[idx_registro, 'Data de Envio da  PC'] = st.session_state[key_data]
                 df.loc[idx_registro, 'ANOTACOES OBS'] = st.session_state[key_obs]
                 df.to_csv("convenios.csv", sep=";", encoding="latin1", index=False)
@@ -108,73 +111,73 @@ if st.session_state["acesso_liberado"]:
             if "🔑 Identificação" in menu_blocos:
                 col_a, col_b = st.columns(2)
                 with col_a:
-                    st.write(f"**Instrumento:** {resultado.loc[idx_registro, 'Instrumento'].values[0]}")
-                    st.write(f"**Ano:** {resultado.loc[idx_registro, 'Ano'].values[0]}")
-                    st.write(f"**Modalidade:** {resultado.loc[idx_registro, 'Modalidade'].values[0]}")
-                    st.write(f"**Processo SEI:** {resultado.loc[idx_registro, 'Processo SEI'].values[0]}")
+                    st.write(f"**Instrumento:** {resultado.iloc[0].get('Instrumento', '')}")
+                    st.write(f"**Ano:** {resultado.iloc[0].get('Ano', '')}")
+                    st.write(f"**Modalidade:** {resultado.iloc[0].get('Modalidade', '')}")
+                    st.write(f"**Processo SEI:** {resultado.iloc[0].get('Processo SEI', '')}")
                 with col_b:
-                    st.write(f"**Nome Proponente:** {resultado.loc[idx_registro, 'Nome Proponente'].values[0]}")
-                    st.write(f"**CNPJ:** {resultado.loc[idx_registro, 'CNPJ'].values[0]}")
-                    st.write(f"**Situação:** {resultado.loc[idx_registro, 'Situacao'].values[0]}")
-                st.info(f"**Objeto:** {resultado.loc[idx_registro, 'Objeto'].values[0]}")
+                    st.write(f"**Nome Proponente:** {resultado.iloc[0].get('Nome Proponente', '')}")
+                    st.write(f"**CNPJ:** {resultado.iloc[0].get('CNPJ', '')}")
+                    st.write(f"**Situação:** {resultado.iloc[0].get('Situacao', '')}")
+                st.info(f"**Objeto:** {resultado.iloc[0].get('Objeto', '')}")
 
             elif "📅 Vigência / Datas" in menu_blocos:
-                st.write(f"**Início Vigência:** {resultado.loc[idx_registro, 'Inicio Vigencia'].values[0]}")
-                st.write(f"**Fim Vigência:** {resultado.loc[idx_registro, 'Fim Vigencia'].values[0]}")
-                st.write(f"**Data Limite para Apresentar PC:** {resultado.loc[idx_registro, 'Data Limite para Apresentar PC'].values[0]}")
+                st.write(f"**Início Vigência:** {resultado.iloc[0].get('Inicio Vigencia', '')}")
+                st.write(f"**Fim Vigência:** {resultado.iloc[0].get('Fim Vigencia', '')}")
+                st.write(f"**Data Limite para Apresentar PC:** {resultado.iloc[0].get('Data Limite para Apresentar PC', '')}")
                 st.text_input("📅 Prestação de Contas Apresentada em:", key=key_data)
 
             elif "📊 Execução Financeira" in menu_blocos:
                 col_c, col_d = st.columns(2)
                 with col_c:
-                    st.write(f"**Valor Global:** R$ {resultado.loc[idx_registro, 'Valor Global'].values[0]}")
-                    st.write(f"**Valor Empenhado:** R$ {resultado.loc[idx_registro, 'Valor Empenhado'].values[0]}")
-                    st.write(f"**Valor Liberado:** R$ {resultado.loc[idx_registro, 'Valor Liberado'].values[0]}")
-                    st.write(f"**Valor de Contrapartida:** R$ {resultado.loc[idx_registro, 'Valor de Contrapartida'].values[0]}")
-                    st.write(f"**Ingresso de R$ (Rendimentos/Contrapartida):** {resultado.loc[idx_registro, 'Ingresso de $'].values[0]}")
+                    st.write(f"**Valor Global:** R$ {resultado.iloc[0].get('Valor Global', '')}")
+                    st.write(f"**Valor Empenhado:** R$ {resultado.iloc[0].get('Valor Empenhado', '')}")
+                    st.write(f"**Valor Liberado:** R$ {resultado.iloc[0].get('Valor Liberado', '')}")
+                    st.write(f"**Valor de Contrapartida:** R$ {resultado.iloc[0].get('Valor de Contrapartida', '')}")
+                    st.write(f"**Ingresso de R$ (Rendimentos/Contrapartida):** {resultado.iloc[0].get('Ingresso de $', '')}")
                 with col_d:
-                    st.write(f"**Total em Movimentações:** R$ {resultado.loc[idx_registro, 'Total em Movimentacoes Financeiras'].values[0]}")
-                    st.write(f"**Saldo em Conta:** R$ {resultado.loc[idx_registro, 'Saldo em conta'].values[0]}")
-                    st.write(f"**Vl Devolvido:** R$ {resultado.loc[idx_registro, 'Vl Devolvido'].values[0]}")
-                    st.write(f"**Execução Financeira Conc./Conv.:** R$ {resultado.loc[idx_registro, 'Execucao  Financeira Concedente  e Convenente'].values[0]}")
-                    st.write(f"**Devolução de Saldo p/ União:** R$ {resultado.loc[idx_registro, 'Devolucao de Saldo p Uniao'].values[0]}")
-                st.warning(f"**Resto a Pagar:** R$ {resultado.loc[idx_registro, 'Resto a Pagar'].values[0]}")
+                    st.write(f"**Total em Movimentações:** R$ {resultado.iloc[0].get('Total em Movimentacoes Financeiras', '')}")
+                    st.write(f"**Saldo em Conta:** R$ {resultado.iloc[0].get('Saldo em conta', '')}")
+                    st.write(f"**Vl Devolvido:** R$ {resultado.iloc[0].get('Vl Devolvido', '')}")
+                    st.write(f"**Execução Financeira Conc./Conv.:** R$ {resultado.iloc[0].get('Execucao  Financeira Concedente  e Convenente', '')}")
+                    st.write(f"**Devolução de Saldo p/ União:** R$ {resultado.iloc[0].get('Devolucao de Saldo p Uniao', '')}")
+                st.warning(f"**Resto a Pagar:** R$ {resultado.iloc[0].get('Resto a Pagar', '')}")
 
             elif "📑 Prestação de Contas" in menu_blocos:
                 col_e, col_f = st.columns(2)
                 with col_e:
-                    st.write(f"**Dias de Atraso Envio da PC:** {resultado.loc[idx_registro, 'Dias de Atraso Envio da PC'].values[0]}")
-                    st.write(f"**PC Informatizada:** {resultado.loc[idx_registro, 'PC Informatizada'].values[0]}")
-                    st.write(f"**Nota de Risco:** {resultado.loc[idx_registro, 'Nota de Risco'].values[0]}")
-                    st.write(f"**Limite Toler Risco:** {resultado.loc[idx_registro, 'Limite Toler  Risco'].values[0]}")
-                    faixa = resultado.loc[idx_registro, 'Faixa de Risco'].values[0]
+                    st.write(f"**Dias de Atraso Envio da PC:** {resultado.iloc[0].get('Dias de Atraso Envio da PC', '')}")
+                    st.write(f"**PC Informatizada:** {resultado.iloc[0].get('PC Informatizada', '')}")
+                    st.write(f"**Nota de Risco:** {resultado.iloc[0].get('Nota de Risco', '')}")
+                    st.write(f"**Limite Toler Risco:** {resultado.iloc[0].get('Limite Toler  Risco', '')}")
+                    faixa = resultado.iloc[0].get('Faixa de Risco', '')
                     st.write(f"**Faixa de Risco:** {faixa if not pd.isna(faixa) else 'Não informado'}")
-                    st.write(f"**Grau de Prioridade:** {resultado.loc[idx_registro, 'Grau de Prioridade'].values[0]}")
+                    st.write(f"**Grau de Prioridade:** {resultado.iloc[0].get('Grau de Prioridade', '')}")
                 with col_f:
-                    st.write(f"**Relatórios de Execução:** {resultado.loc[idx_registro, 'Relatorios de Execucao'].values[0]}")
-                    st.write(f"**Ação de Monitoramento:** {resultado.loc[idx_registro, 'Acao de Monitoramnto'].values[0]}")
-                    st.write(f"**Parecer Financeiro:** {resultado.loc[idx_registro, 'Parecer Financeiro'].values[0]}")
-                    st.write(f"**Parecer Tec-Mérito:** {resultado.loc[idx_registro, 'Parecer Tec -Merito'].values[0]}")
-                    st.write(f"**Análise de Equipamentos:** {resultado.loc[idx_registro, 'Analise de Equipamentos'].values[0]}")
-                    st.write(f"**Ação de Análise de PC:** {resultado.loc[idx_registro, 'Acao de Analise de PC'].values[0]}")
-                st.info(f"**Percentual de Evolução da Análise:** {resultado.loc[idx_registro, 'Percentual de Evolucao da Analise'].values[0]}")
-                st.write(f"**Pareceres Incluídos na Plataforma:** {resultado.loc[idx_registro, 'Pareceres Incluidos na Plataforma'].values[0]}")
+                    st.write(f"**Relatórios de Execução:** {resultado.iloc[0].get('Relatorios de Execucao', '')}")
+                    st.write(f"**Ação de Monitoramento:** {resultado.iloc[0].get('Acao de Monitoramnto', '')}")
+                    st.write(f"**Parecer Financeiro:** {resultado.iloc[0].get('Parecer Financeiro', '')}")
+                    st.write(f"**Parecer Tec-Mérito:** {resultado.iloc[0].get('Parecer Tec -Merito', '')}")
+                    st.write(f"**Análise de Equipamentos:** {resultado.iloc[0].get('Analise de Equipamentos', '')}")
+                    st.write(f"**Ação de Análise de PC:** {resultado.iloc[0].get('Acao de Analise de PC', '')}")
+                st.info(f"**Percentual de Evolução da Análise:** {resultado.iloc[0].get('Percentual de Evolucao da Analise', '')}")
+                st.write(f"**Pareceres Incluídos na Plataforma:** {resultado.iloc[0].get('Pareceres Incluidos na Plataforma', '')}")
 
             elif "📝 Monitoramento" in menu_blocos:
                 col_g, col_h = st.columns(2)
                 with col_g:
-                    st.write(f"**Situação do Convênio:** {resultado.loc[idx_registro, 'Status de Execucao'].values[0]}")
-                    st.write(f"**Percentual de Execução:** {resultado.loc[idx_registro, 'Percental  Exec'].values[0]}")
+                    st.write(f"**Situação do Convênio:** {resultado.iloc[0].get('Status de Execucao', '')}")
+                    st.write(f"**Percentual de Execução:** {resultado.iloc[0].get('Percental  Exec', '')}")
                 with col_h:
-                    st.write(f"**Técnico / Analista:** {resultado.loc[idx_registro, 'Tecnico / Analista'].values[0]}")
-                    st.write(f"**Data de Vínculo Fiscal:** {resultado.loc[idx_registro, 'Data de Vinculo Fiscal'].values[0]}")
+                    st.write(f"**Técnico / Analista:** {resultado.iloc[0].get('Tecnico / Analista', '')}")
+                    st.write(f"**Data de Vínculo Fiscal:** {resultado.iloc[0].get('Data de Vinculo Fiscal', '')}")
 
             elif "⚠️ Alertas" in menu_blocos:
-                st.error(f"⚠️ **ALERTA de Execução Financeira:** {resultado.loc[idx_registro, 'ALERTA de Execucao Financeira'].values[0]}")
-                st.error(f"⚠️ **ALERTA Sem Desembolso:** {resultado.loc[idx_registro, 'ALERTA Sem Desembolso'].values[0]}")
-                st.error(f"⚠️ **ALERTA Sem Pgt + 150 Dias:** {resultado.loc[idx_registro, 'ALERTA Sem Pgt + 150 Dias'].values[0]}")
-                st.write(f"**Acórdão TCU1203:** {resultado.loc[idx_registro, 'Acordao  TCU1203'].values[0]}")
-                st.write(f"**Grau de Prioridade:** {resultado.loc[idx_registro, 'GRAU DE PRIORIDADE'].values[0]}")
+                st.error(f"⚠️ **ALERTA de Execução Financeira:** {resultado.iloc[0].get('ALERTA de Execucao Financeira', '')}")
+                st.error(f"⚠️ **ALERTA Sem Desembolso:** {resultado.iloc[0].get('ALERTA Sem Desembolso', '')}")
+                st.error(f"⚠️ **ALERTA Sem Pgt + 150 Dias:** {resultado.iloc[0].get('ALERTA Sem Pgt + 150 Dias', '')}")
+                st.write(f"**Acórdão TCU1203:** {resultado.iloc[0].get('Acordao  TCU1203', '')}")
+                st.write(f"**Grau de Prioridade:** {resultado.iloc[0].get('GRAU DE PRIORIDADE', '')}")
 
             elif "🗒️ Anotações e OBS" in menu_blocos:
                 st.text_area("🗒️ Modifique as observações do convênio:", key=key_obs, height=250)
