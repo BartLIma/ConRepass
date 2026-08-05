@@ -87,7 +87,7 @@ if st.session_state["acesso_liberado"]:
                 df.loc[idx_registro, 'Data de Envio da  PC'] = st.session_state[key_data]
                 df.loc[idx_registro, 'ANOTACOES OBS'] = st.session_state[key_obs]
                 df.to_csv("convenios.csv", sep=";", encoding="latin1", index=False)
-                st.sidebar.success("Alterações salvas!")
+                st.sidebar.success("Alterações salvas com sucesso!")
 
             # Botão de Exportar CSV geral fixo na barra lateral
             csv_data = df.to_csv(sep=";", index=False).encode("latin1")
@@ -179,4 +179,3 @@ if st.session_state["acesso_liberado"]:
                 st.write(f"**Acórdão TCU1203:** {resultado.iloc[0].get('Acordao  TCU1203', '')}")
                 st.write(f"**Grau de Prioridade:** {resultado.iloc[0].get('GRAU DE PRIORIDADE', '')}")
 
-            elif "🗒️ Anotações e OBS" in menu_blocos:
