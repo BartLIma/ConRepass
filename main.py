@@ -45,3 +45,28 @@ if st.session_state["app_selecionado"] == "🏠 Menu Inicial":
         if st.button("Abrir Relatório ➡️", use_container_width=True):
             st.session_state["app_selecionado"] = "📊 Relatório de Acompanhamento"
             st.rerun()
+elif st.session_state["app_selecionado"] == "🔍 Consulta Conrepass":
+    try:
+        # Importa e executa o código do aplicativo Conrepass de forma segura
+        import conrepass_app
+    except ModuleNotFoundError:
+        st.error("Erro operacional: O arquivo 'conrepass_app.py' não foi localizado na mesma pasta deste Hub.")
+    except Exception as e:
+        st.error(f"Ocorreu uma falha ao renderizar o aplicativo Conrepass: {e}")
+
+elif st.session_state["app_selecionado"] == "📊 Relatório de Acompanhamento":
+    try:
+        # Importa e executa o código do aplicativo Rel_Acomp de forma segura
+        import rel_acomp_app
+    except ModuleNotFoundError:
+        st.error("Erro operacional: O arquivo 'rel_acomp_app.py' não foi localizado na mesma pasta deste Hub.")
+    except Exception as e:
+        st.error(f"Ocorreu uma falha ao renderizar o Relatório de Acompanhamento: {e}")
+
+# --- RODAPÉ DISCRETO PADRONIZADO DO HUB ---
+st.sidebar.markdown("---")
+st.sidebar.markdown(
+    "<p style='text-align:center; font-size:12px; color:gray; margin-top:20px;'>"
+    "Bartolomeu Lima - Corecon-ES 1541</p>",
+    unsafe_allow_html=True
+)
